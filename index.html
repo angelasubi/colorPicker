@@ -1,29 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="./lib/css/index.css">
-    <title>ColorPicker Demo</title>
-    <style type="text/css">
-      #color {
-        width: 100px;
-        height: 100px;
-      }
-    </style>
+
+    <link rel="stylesheet" href="css/input_color.css">
+    <title>Document</title>
+    
 </head>
 <body>
-  <div id="color-picker">
-    <div id="color"></div>
-  </div>
-
-
-  <script type="text/javascript" src="./lib/js/index.js"></script>
-  <script type="text/javascript">
-    var ts = new InputColor(document.getElementById('color'), '#ffffff', {
-      // ...
-    })
-  </script>
+    <div class="view">
+        <div id="color1" style="width: 100px;height: 30px; float: left;"></div>
+        <div id="color2" style="width: 100px;height: 30px; float: left; margin-left: 20px;"></div>
+        <div id="color3" style="width: 100px;height: 30px; float: left; margin-left: 20px;
+                                background: #ed62db; text-align: center;line-height: 30px">文字</div>
+        <div id="color4" style="width: 100px;height: 30px; float: left;margin-left: 20px;"></div>
+    </div>
+    <div class="edit" style="display:none"></div>
+    <script src="./js/input-color.js"></script>
+    <script>
+        new InputColor(document.getElementById('color1'),'#fff000')
+        new InputColor(document.getElementById('color2'),'#ed6262')
+        new InputColor(document.getElementById('color3'),'#ffffff', {
+            styleColorType: 'color'
+        })
+        
+        let bgColor = document.getElementById('color2').backgroundColor;
+        new InputColor(document.getElementById('color4'),'#00b3ff',{
+            //颜色改变中
+            onChange: function(color){
+                document.getElementById('color2').style.backgroundColor = color.rgbStr
+            },
+            //确定颜色
+            onDetermine: function(color){
+                document.getElementById('color2').style.backgroundColor = color.rgbStr
+            },
+            //取消修改
+            onCancel: function(color){
+                document.getElementById('color2').style.backgroundColor = bgColor
+            },
+            //弹出选择器时
+            onPopup: function(){
+                bgColor = document.getElementById('color2').style.backgroundColor
+            },
+            shared: true //是否单独的弹出DOM结构。false: 共享dom结构，默认false。除了用ifr之外基本不会用到
+        })
+    </script>
 </body>
 </html>
